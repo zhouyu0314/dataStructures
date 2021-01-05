@@ -23,7 +23,7 @@ public class SparseArray {
         /*
         1.先创建一个原始的二维数组 11*11 0：表示没有棋子 1：表示黑子 2：表示蓝子
          */
-        int chessArr1[][] = new int[11][11];
+        int[][] chessArr1 = new int[11][11];
         chessArr1[1][2] = 1;
         chessArr1[2][3] = 2;
         //输出原始的二位数组
@@ -49,7 +49,7 @@ public class SparseArray {
         }
         //System.out.println("sum=" + sum); sum=2
         //2.2.创建对应的稀疏数组
-        int sparseArray[][] = new int[sum + 1][3];
+        int[][] sparseArray = new int[sum + 1][3];
         //2.3.给稀疏数组赋值
         sparseArray[0][0] = 11;
         sparseArray[0][1] = 11;
@@ -80,7 +80,7 @@ public class SparseArray {
         /*
         3.稀疏数组还原成二维数组
          */
-        int chessArr2[][] = new int[sparseArray[0][0]][sparseArray[0][1]];//sparseArray[0][0] 第0行第0列
+        int[][] chessArr2 = new int[sparseArray[0][0]][sparseArray[0][1]];//sparseArray[0][0] 第0行第0列
         //3.1.从稀疏数组的第二行开始遍历
         for (int i = 1; i < sparseArray.length; i++) {
             chessArr2[sparseArray[i][0]][sparseArray[i][1]] = sparseArray[i][2];
@@ -111,7 +111,7 @@ public class SparseArray {
         System.out.println("*****************json转稀疏数组*****************");
         //json转稀疏数组
         List<int[]> ints = JSONObject.parseArray(jsonStr, int[].class);
-        int sparseArray1[][] = new int[ints.size()][3];
+        int[][] sparseArray1 = new int[ints.size()][3];
         for (int i = 0; i < ints.size(); i++) {
             int arr[] = ints.get(i);
             for (int j = 0; j < arr.length; j++) {

@@ -1,10 +1,9 @@
 package com.zy.sparseArray;
 
+
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -100,15 +99,32 @@ public class SparseArray {
         /*
         4.稀疏数组持久化
          */
-
+        System.out.println("*****************稀疏数组持久化*****************");
         //转json
         String jsonStr = JSON.toJSONString(sparseArray);
         System.out.println(jsonStr);
 
-        List<int[]> ints = JSONObject.parseArray(jsonStr, int[].class);
-        for (int[] anInt : ints) {
 
-            System.out.println(Arrays.toString(anInt) );
+        /*
+        json 转稀疏数组
+         */
+        System.out.println("*****************json转稀疏数组*****************");
+        //json转稀疏数组
+        List<int[]> ints = JSONObject.parseArray(jsonStr, int[].class);
+        int sparseArray1[][] = new int[ints.size()][3];
+        for (int i = 0; i < ints.size(); i++) {
+            int arr[] = ints.get(i);
+            for (int j = 0; j < arr.length; j++) {
+                sparseArray1[i][j] = arr[j];
+            }
+        }
+
+
+        for (int[] row : sparseArray1) {
+            for (int data : row) {
+                System.out.printf("%d\t", data);
+            }
+            System.out.println();
         }
 
 

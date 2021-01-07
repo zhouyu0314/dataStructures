@@ -14,6 +14,19 @@ import java.util.Scanner;
  * 4. 对队列为空的条件， rear == front 空
  * 5. 当我们这样分析， 队列中有效的数据的个数   (rear + maxSize - front) % maxSize   // rear = 1 front = 0
  * 6. 我们就可以在原来的队列上修改得到，一个环形队列
+ * |🟡|🟡|🟡|  | f=0 r=3
+ *
+ * |  |🟡|🟡|  | f=1 r=3
+ *
+ * |  |🟡|🟡|🟡| f=1 r=4
+ *
+ * |  |  |🟡|🟡| f=2 r=4
+ *
+ * |🟡|  |🟡|🟡| f=2 r=1
+ *
+ * |🟡|  |  |🟡| f=3 r=1
+ *
+ * |🟡|🟡|  |🟡| f=3 r=2
  */
 public class CircleArrayQueueDemo {
     public static void main(String[] args) throws RuntimeException {
@@ -22,53 +35,68 @@ public class CircleArrayQueueDemo {
 
         // 创建一个环形队列
         CircleArrayQueue<Integer> queue = new CircleArrayQueue(4); //说明设置4, 其队列的有效数据最大是3
-        char key = ' '; // 接收用户输入
-        Scanner scanner = new Scanner(System.in);//
-        boolean loop = true;
-        // 输出一个菜单
-        while (loop) {
-            System.out.println("s(show): 显示队列");
-            System.out.println("e(exit): 退出程序");
-            System.out.println("a(add): 添加数据到队列");
-            System.out.println("g(get): 从队列取出数据");
-            System.out.println("h(head): 查看队列头的数据");
-            key = scanner.next().charAt(0);// 接收一个字符
-            switch (key) {
-                case 's':
-                    queue.showQueue();
-                    break;
-                case 'a':
-                    System.out.println("输出一个数");
-                    int value = scanner.nextInt();
-                    queue.addQueue(value);
-                    break;
-                case 'g': // 取出数据
-                    try {
-                        int res = queue.getQueue();
-                        System.out.printf("取出的数据是%d\n", res);
-                    } catch (RuntimeException e) {
-                        // TODO: handle RuntimeException
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 'h': // 查看队列头的数据
-                    try {
-                        int res = queue.headQueue();
-                        System.out.printf("队列头的数据是%d\n", res);
-                    } catch (RuntimeException e) {
-                        // TODO: handle RuntimeException
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                case 'e': // 退出
-                    scanner.close();
-                    loop = false;
-                    break;
-                default:
-                    break;
-            }
-        }
-        System.out.println("程序退出~~");
+
+        queue.addQueue(0);
+        queue.addQueue(1);
+        queue.addQueue(2);
+        queue.getQueue();
+        queue.addQueue(3);
+        queue.getQueue();
+        queue.addQueue(4);
+        queue.getQueue();
+        queue.addQueue(5);
+        queue.getQueue();
+        queue.addQueue(6);
+
+
+
+//        char key = ' '; // 接收用户输入
+//        Scanner scanner = new Scanner(System.in);//
+//        boolean loop = true;
+//        // 输出一个菜单
+//        while (loop) {
+//            System.out.println("s(show): 显示队列");
+//            System.out.println("e(exit): 退出程序");
+//            System.out.println("a(add): 添加数据到队列");
+//            System.out.println("g(get): 从队列取出数据");
+//            System.out.println("h(head): 查看队列头的数据");
+//            key = scanner.next().charAt(0);// 接收一个字符
+//            switch (key) {
+//                case 's':
+//                    queue.showQueue();
+//                    break;
+//                case 'a':
+//                    System.out.println("输出一个数");
+//                    int value = scanner.nextInt();
+//                    queue.addQueue(value);
+//                    break;
+//                case 'g': // 取出数据
+//                    try {
+//                        int res = queue.getQueue();
+//                        System.out.printf("取出的数据是%d\n", res);
+//                    } catch (RuntimeException e) {
+//                        // TODO: handle RuntimeException
+//                        System.out.println(e.getMessage());
+//                    }
+//                    break;
+//                case 'h': // 查看队列头的数据
+//                    try {
+//                        int res = queue.headQueue();
+//                        System.out.printf("队列头的数据是%d\n", res);
+//                    } catch (RuntimeException e) {
+//                        // TODO: handle RuntimeException
+//                        System.out.println(e.getMessage());
+//                    }
+//                    break;
+//                case 'e': // 退出
+//                    scanner.close();
+//                    loop = false;
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
+//        System.out.println("程序退出~~");
 
 
     }
@@ -166,6 +194,9 @@ class CircleArrayQueue<E> {
 
     /**
      * 求出当前队列的有效个数
+     * 此时分两种情况 rear在front右边 即rear > front 结果可直接 rear - front
+     * rear 在 front 左边 即 rear + front 如果此时用rear-front 则得到的时空闲slot的个数的相反数 再 +maxSize 则可得到剩余元素个数
+     * 为了适配两种情况，即不让两种情况使用一种算法得到一个超过maxSize的数 所有要取模
      */
     public int size() {
         return (rear + maxSize - front) % maxSize;

@@ -2,9 +2,6 @@ package com.zy.sort;
 
 import java.util.Arrays;
 
-/**
- * swap
- */
 public class ShellSort {
     public static void main(String[] args) {
         int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
@@ -12,23 +9,23 @@ public class ShellSort {
     }
 
     public static void shell(int[] arr) {
-        for (int k = arr.length / 2; k > 0; k /= 2) {
-            for (int i = 0; i < k; i++) {
+        for (int i = arr.length / 2; i > 0; i /= 2) {
+            for (int j = 0; j < i; j++) {
                 //定义有序表中的第一个元素
                 int value = 0;
                 //定义无序表中的元素
                 int valueIndex = 0;
-                for (int j = i; j < arr.length; j += k) {
-                    value = arr[j];
-                    valueIndex = j - k;
+                for (int k = j; k < arr.length; k += i) {
+                    value = arr[k];
+                    valueIndex = k - i;
                     //valueIndex >=0 保证数组不会下标越界
                     //value < arr[valueIndex] 保证此元素小于无序表中的元素，满足则要交换
                     while (valueIndex >= 0 && value < arr[valueIndex]) {
-                        arr[valueIndex + k] = arr[valueIndex];
-                        valueIndex -= k;
+                        arr[valueIndex + i] = arr[valueIndex];
+                        valueIndex -= i;
                     }
-                    if (valueIndex + k != j) {
-                        arr[valueIndex + k] = value;
+                    if (valueIndex + i != k) {
+                        arr[valueIndex + i] = value;
                     }
                 }
 
@@ -39,21 +36,21 @@ public class ShellSort {
         }
 
 //        第一轮 分成10/2 5组 [8,3] [9,5] [1,4] [7,6] [2,0]
-//        for (int i = 0; i < arr.length / 2; i++) {
+//        for (int j = 0; j < arr.length / 2; j++) {
 //            //定义有序表中的第一个元素
 //            int value = 0;
 //            //定义无序表中的元素
 //            int valueIndex = 0;
-//            for (int j = i; j < arr.length; j += 5) {
-//                value = arr[j];
-//                valueIndex = j - 5;
+//            for (int k = j; k < arr.length; k += 5) {
+//                value = arr[k];
+//                valueIndex = k - 5;
 //                //valueIndex >=0 保证数组不会下标越界
 //                //value < arr[valueIndex] 保证此元素小于无序表中的元素，满足则要交换
 //                while (valueIndex >= 0 && value < arr[valueIndex]) {
 //                    arr[valueIndex + 5] = arr[valueIndex];
 //                    valueIndex -= 5;
 //                }
-//                if (valueIndex + 5 != j) {
+//                if (valueIndex + 5 != k) {
 //                    arr[valueIndex + 5] = value;
 //                }
 //            }
@@ -64,21 +61,21 @@ public class ShellSort {
 //        System.out.println("第一轮" + Arrays.toString(arr));//[3, 5, 1, 6, 0, 8, 9, 4, 7, 2]
 //
 //        //第二轮 分成 10/2/2 2组 [3,1,0,9,7]  [5,6,8,4,2]
-//        for (int i = 0; i < arr.length / 2 / 2; i++) {
+//        for (int j = 0; j < arr.length / 2 / 2; j++) {
 //            //定义有序表中的第一个元素
 //            int value = 0;
 //            //定义无序表中的元素
 //            int valueIndex = 0;
-//            for (int j = i; j < arr.length; j += 2) {
-//                value = arr[j];
-//                valueIndex = j - 2;
+//            for (int k = j; k < arr.length; k += 2) {
+//                value = arr[k];
+//                valueIndex = k - 2;
 //                //valueIndex >=0 保证数组不会下标越界
 //                //value < arr[valueIndex] 保证此元素小于无序表中的元素，满足则要交换
 //                while (valueIndex >= 0 && value < arr[valueIndex]) {
 //                    arr[valueIndex + 2] = arr[valueIndex];
 //                    valueIndex -= 2;
 //                }
-//                if (valueIndex + 2 != j) {
+//                if (valueIndex + 2 != k) {
 //                    arr[valueIndex + 2] = value;
 //                }
 //            }
@@ -86,21 +83,21 @@ public class ShellSort {
 //        System.out.println("第二轮" + Arrays.toString(arr));//[0, 2, 1, 4, 3, 5, 7, 6, 9, 8]
 //
 //        //第三轮
-//        for (int i = 0; i < arr.length / 2 / 2 / 2; i++) {
+//        for (int j = 0; j < arr.length / 2 / 2 / 2; j++) {
 //            //定义有序表中的第一个元素
 //            int value = 0;
 //            //定义无序表中的元素
 //            int valueIndex = 0;
-//            for (int j = i; j < arr.length; j += 1) {
-//                value = arr[j];
-//                valueIndex = j - 1;
+//            for (int k = j; k < arr.length; k += 1) {
+//                value = arr[k];
+//                valueIndex = k - 1;
 //                //valueIndex >=0 保证数组不会下标越界
 //                //value < arr[valueIndex] 保证此元素小于无序表中的元素，满足则要交换
 //                while (valueIndex >= 0 && value < arr[valueIndex]) {
 //                    arr[valueIndex + 1] = arr[valueIndex];
 //                    valueIndex -= 1;
 //                }
-//                if (valueIndex + 1 != j) {
+//                if (valueIndex + 1 != k) {
 //                    arr[valueIndex + 1] = value;
 //                }
 //            }

@@ -11,27 +11,35 @@ public class InsertSort {
     public static void main(String[] args) {
         int[] arr = {1, 10, -2, 5, -4, 30, -10, 3, 2};
         insert(arr);
-        Arrays.toString(arr);
+        System.out.println(Arrays.toString(arr));
 
 
     }
 
     public static void insert(int[] arr) {
-        int k = 0;
-        for (int i = 0; i < arr.length - 1; i++) {
-            k = arr[i+1];
+        //定义有序表中的第一个元素
+        int value = 0;
+        //定义无序表中的元素
+        int valueIndex = 0;
 
-            while (i >= 0) {
-                if (k < arr[i]) {
-                    arr[i+1] = arr[i];
-                }else{
-                    arr[i+1] = k;
-                }
+        for (int i = 1; i < arr.length; i++) {
+            value = arr[i];
+            valueIndex = i - 1;
+
+            //valueIndex >=0 保证数组不会下标越界
+            //value < arr[valueIndex] 保证此元素小于无序表中的元素，满足则要交换
+            while (valueIndex >= 0 && value < arr[valueIndex]) {
+                arr[valueIndex +1] = arr[valueIndex];
+                valueIndex--;
+            }
+
+            if (valueIndex+1 != i) {
+                arr[valueIndex +1] = value;
             }
 
 
-
         }
+
 
     }
 }
